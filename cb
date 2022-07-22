@@ -24,5 +24,5 @@ if [ ${ROS_PKG} == "all" ]; then
         && colcon build --symlink-install
 else
     cd ${ROBOT_WS} \
-        && colcon build --symlink-install --packages-select ${ROS_PKG}
+        && colcon build --symlink-install --packages-up-to ${ROS_PKG}
 fi
