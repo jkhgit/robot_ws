@@ -3,5 +3,11 @@ build/
 install/
 log/
 
+# python
+__pycache__
+
 # swp
 *.swp
+
+# test
+test*
