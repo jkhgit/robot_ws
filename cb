@@ -1,0 +1,28 @@
+#!/bin/bash
+
+ROBOT_WS="$( cd "$( dirname ${BASH_SOURCE} )" && pwd -P )"
+
+# option parsing
+for opt in $@; do
+    case ${opt} in
+        --help)
+        usage
+        ;;
+        --pkg=*)
+        ROS_PKG=${opt#*=}
+        ;;
+        *)
+        echo "Invalid option"
+        ;;
+    esac
+done
+
+[ -z ${ROS_PKG} ] && ROS_PKG="all"
+echo "pkg = ${ROS_PKG}"
+if [ ${ROS_PKG} == "all" ]; then
+    cd ${ROBOT_WS} \
+        && colcon build --symlink-install
+else
+    cd ${ROBOT_WS} \
+        && colcon build --symlink-install --packages-select ${ROS_PKG}
+fi
