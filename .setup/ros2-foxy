@@ -1,0 +1,60 @@
+#!/bin/bash
+
+[ -z $(command -v curl) ] && sudo apt install -y curl
+
+# add key
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+# add repo
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu focal main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+# install apt packages 1
+sudo apt install \
+  build-essential \
+  cmake \
+  curl \
+  git \
+  gnupg2 \
+  libbullet-dev \
+  locales \
+  lsb-release \
+  python3-colcon-common-extensions \
+  python3-flake8 \
+  python3-pip \
+  python3-pytest-cov \
+  python3-rosdep \
+  python3-setuptools \
+  python3-vcstool \
+  qtcreator \
+  ros-foxy-desktop \
+  ros-foxy-rmw-cyclonedds* \
+  ros-foxy-rmw-fastrtps* \
+  wget
+
+# set local
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# python3 requirements
+python3 -m pip install -U -r \
+  argcomplete \
+  flake8-blind-except \
+  flake8-builtins \
+  flake8-class-newline \
+  flake8-comprehensions \
+  flake8-deprecated \
+  flake8-docstrings \
+  flake8-import-order \
+  flake8-quotes \
+  pytest \
+  pytest-repeat \
+  pytest-rerunfailures
+
+# install apt packages 2
+sudo apt install --no-install-recommends -y \
+  libasio-dev \
+  libtinyxml2-dev \
+  libcunit1-dev
+
+# vim: ts=4 sw=2 sts=2 et
